@@ -9,12 +9,12 @@ public class Claim {
     private String CardNumber;
     private Date examDate;
     private List<String> Documents;
-    private float claimAmount;
+    private double claimAmount;
     private Status status;
     private ReceiverBankingInfo receiverBankingInfo;
     public Claim (){}
 
-    public Claim(String claimID, Date claimDate, Customer insuredPerson, String cardNumber, Date examDate, List<String> documents, float claimAmount, Status status, ReceiverBankingInfo receiverBankingInfo) {
+    public Claim(String claimID, Date claimDate, Customer insuredPerson, String cardNumber, Date examDate, List<String> documents, double claimAmount, Status status, ReceiverBankingInfo receiverBankingInfo) {
         this.claimID = claimID;
         this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;
@@ -25,4 +25,61 @@ public class Claim {
         this.status = status;
         this.receiverBankingInfo = receiverBankingInfo;
     }
+
+    public String getClaimID() {
+        return claimID;
+    }
+
+    public void setClaimID(String claimID) {
+        this.claimID = claimID;
+    }
+
+    public Date getClaimDate() {
+        return claimDate;
+    }
+
+    public void setClaimDate(Date claimDate) {
+        this.claimDate = claimDate;
+    }
+
+    public Customer getInsuredPerson() {
+        return insuredPerson;
+    }
+
+    public void setInsuredPerson(Customer insuredPerson) {
+        this.insuredPerson = insuredPerson;
+    }
+
+    public String getCardNumber() {
+        return CardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        CardNumber = cardNumber;
+    }
+
+    public Date getExamDate() {
+        return examDate;
+    }
+
+    public void setExamDate(Date examDate) {
+        this.examDate = examDate;
+    }
+
+    public double getClaimAmount() {
+        return claimAmount;
+    }
+
+    public void setClaimAmount(double claimAmount) {
+        this.claimAmount = claimAmount;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
 }
