@@ -1,5 +1,6 @@
 package Assessment1;
 
+import java.util.Date;
 import java.util.List;
 
 public class ClaimBuilder {
@@ -8,7 +9,10 @@ public class ClaimBuilder {
         claim.setClaimID(claimID);
         return this;
     }
-    public ClaimBuilder setDate(){}
+    public ClaimBuilder setClaimDate(Date date){
+        claim.setClaimDate(date);
+        return this;
+    }
     public ClaimBuilder setInsuredPerson(Customer insuredPerson){
         claim.setInsuredPerson(insuredPerson);
         return this;
@@ -17,8 +21,12 @@ public class ClaimBuilder {
         claim.setCardNumber(CardNumber);
         return this;
     }
-    public ClaimBuilder setExamDate(){
-
+    public ClaimBuilder setExamDate(Date date){
+        claim.setExamDate(date);
+        return this;
+    }
+    public ClaimBuilder setDocuments(List<String> documents){
+        claim.setDocuments(documents);
         return this;
     }
     public ClaimBuilder setClaimAmount(double claimAmount){
@@ -29,7 +37,8 @@ public class ClaimBuilder {
         claim.setStatus(status);
         return this;
     }
-    public ClaimBuilder setBankingInfo(){
+    public ClaimBuilder setBankingInfo(ReceiverBankingInfo receiverBankingInfo){
+        claim.setReceiverBankingInfo(receiverBankingInfo);
         return this;
     }
     public Claim build(){

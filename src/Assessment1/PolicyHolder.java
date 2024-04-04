@@ -2,7 +2,7 @@ package Assessment1;
 
 import java.util.List;
 
-public class PolicyHolder extends Customer implements ClaimProcessManager,IDCheck {
+public class PolicyHolder extends Customer{
     private List<Dependent> dependents;
     public PolicyHolder (){super();}
     public PolicyHolder(String customerID, String fullName, InsuranceCard insuranceCard, List<Claim> claimsList, List<Dependent> dependents){
@@ -30,7 +30,7 @@ public class PolicyHolder extends Customer implements ClaimProcessManager,IDChec
             return  true;
         }else {return  false;}
     }
-
+    /*
     @Override
     public boolean add(Claim claim) {
         if(!this.getClaimsList().contains(claim)){
@@ -50,7 +50,7 @@ public class PolicyHolder extends Customer implements ClaimProcessManager,IDChec
             updatedClaim.setCardNumber(claim.getCardNumber());
             updatedClaim.setExamDate(claim.getExamDate());
             updatedClaim.setStatus(claim.getStatus());
-            updatedClaim.setClaimAmount(claim.getClaimAmount());*/
+            updatedClaim.setClaimAmount(claim.getClaimAmount());
             claim = updatedClaim;
         }
     }
@@ -62,23 +62,34 @@ public class PolicyHolder extends Customer implements ClaimProcessManager,IDChec
             return  true;
         }else{
         return false;}
-    }
-
+    }*/
+    /*
     @Override
     public Claim getOne(String claimID) {
-
+        ClaimList localClaimList = new ClaimList(this.getClaimsList());
+        while (localClaimList.hasNext()){
+            Claim localClaim = new Claim();
+            localClaim = (Claim) localClaimList.next();
+            if(localClaim.getClaimID().equals(claimID)){
+                return localClaim;
+            }
+        }
+        return null;
     }
 
     @Override
-    public void getAll() {
-        for (Claim i : this.getClaimsList()) {
-
+    public Claim getAll() {
+        ClaimList localClaimList = new ClaimList(this.getClaimsList());
+        while (localClaimList.hasNext()){
+            return localClaimList.next();
         }
-    }
-
+        return null;
+        }
+    }*/
+    /*
     @Override
     public boolean IDFormatCheck(String inputID) {
 
         return false;
-    }
+    }*/
 }

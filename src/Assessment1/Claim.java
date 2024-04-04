@@ -1,6 +1,8 @@
 package Assessment1;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+
 
 public class Claim {
     private String claimID;
@@ -82,4 +84,19 @@ public class Claim {
         this.status = status;
     }
 
+    public List<String> getDocuments() {
+        return Documents;
+    }
+
+    public void setDocuments(List<String> documents) {
+        Documents = documents;
+    }
+
+    public ReceiverBankingInfo getReceiverBankingInfo() {
+        return receiverBankingInfo;
+    }
+
+    public void setReceiverBankingInfo(ReceiverBankingInfo receiverBankingInfo) {
+        this.receiverBankingInfo = receiverBankingInfo;
+    }
 }

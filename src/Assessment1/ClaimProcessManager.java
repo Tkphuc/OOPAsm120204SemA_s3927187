@@ -9,7 +9,7 @@ public interface ClaimProcessManager {
 
 
     public Claim getOne(String claimID);
-    public  void getAll();
+    public  Claim getAll();
     /*
     Return type of the methods to be decided later
     * */

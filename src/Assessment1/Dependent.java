@@ -2,7 +2,7 @@ package Assessment1;
 
 import java.util.List;
 
-public class Dependent extends Customer implements ClaimProcessManager{
+public class Dependent extends Customer{
     private PolicyHolder dependOn;
     public Dependent (){super();}
     public  Dependent(String customerID, String fullName, InsuranceCard insuranceCard, List<Claim> claimsList,PolicyHolder dependOn ){
@@ -10,33 +10,26 @@ public class Dependent extends Customer implements ClaimProcessManager{
         this.dependOn = dependOn;
     }
 
-    @Override
-    public boolean add(Claim claim) {
-        if(!this.getClaimsList().contains(claim)){
-            this.getClaimsList().add(claim);
-            return  true;}
-        else{return  false;}
-    }
 
-    @Override
-    public void update(Claim claim) {
-
-    }
-
-    @Override
-    public boolean delete(Claim claim) {
-        if(this.getClaimsList().contains(claim)){
-            this.getClaimsList().remove(claim);
-            return  true;
-        }else{
-            return false;}
-    }
+    /*
     @Override
     public Claim getOne(String claimID){
-
+        ClaimList localClaimList = new ClaimList(this.getClaimsList());
+        while (localClaimList.hasNext()){
+            Claim localClaim = new Claim();
+            localClaim = (Claim) localClaimList.next();
+            if(localClaim.getClaimID().equals(claimID)){
+                return localClaim;
+            }
+        }
+        return null;
     }
     @Override
-    public void getAll() {
-
-    }
+    public Claim getAll() {
+        ClaimList localClaimList = new ClaimList(this.getClaimsList());
+        while (localClaimList.hasNext()){
+            return localClaimList.next();
+        }
+        return null;
+    }*/
 }
