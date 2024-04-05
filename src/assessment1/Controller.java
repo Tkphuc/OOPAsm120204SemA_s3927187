@@ -14,7 +14,7 @@ public class Controller {
         this.consoleView = consoleView;
     }
     public Claim createClaim(){
-
+        consoleView.displayClaimCreationForm();
     }
 
 

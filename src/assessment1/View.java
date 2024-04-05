@@ -1,5 +1,7 @@
 package assessment1;
 
+import java.util.Map;
+
 public abstract class View {
     public static final String CLAIM_ID = "CLAIM_ID";
     public static final String CLAIM_DATE = "CLAIM_DATE";
@@ -21,5 +23,6 @@ public abstract class View {
     public static final String DEPEND_ON = "DEPEND_ON";
 
     public abstract void displayClaim(Claim claim);
-    public abstract void displayClaimCreationForm();
+    public abstract Map<String,DynamicAttributeType> displayClaimCreationForm();
+    public abstract void displayMainMenu();
 }

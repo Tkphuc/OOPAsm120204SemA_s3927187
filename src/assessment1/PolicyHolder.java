@@ -28,8 +28,8 @@ public class PolicyHolder extends Customer{
         }
     }
     public Customer getDepdendent(Customer Dependent){
-        if(dependents.contains(Dependent)){
-            return Dependent;
+        if(hasDependent(Dependent)){
+            return  Dependent;
         }else {return  null;}
     }
     public boolean hasDependent(Customer Dependent){
