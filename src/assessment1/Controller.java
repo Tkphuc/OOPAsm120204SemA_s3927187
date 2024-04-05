@@ -13,6 +13,9 @@ public class Controller {
         this.insuranceCard = insuranceCard;
         this.consoleView = consoleView;
     }
+    public Claim createClaim(){
+
+    }
 
 
 
