@@ -94,8 +94,7 @@ public abstract class Customer implements ClaimProcessManager{
     @Override
     public Claim getAll() {
         ClaimList localClaimList = new ClaimList(this.getClaimsList());
-
-        while (localClaimList.hasNext()){
+        if(localClaimList.hasNext()){
             return localClaimList.next();
         }
         return null;
