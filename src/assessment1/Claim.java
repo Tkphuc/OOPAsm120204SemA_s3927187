@@ -1,4 +1,4 @@
-package Assessment1;
+package assessment1;
 
 import java.util.Date;
 import java.util.List;
@@ -98,5 +98,20 @@ public class Claim {
 
     public void setReceiverBankingInfo(ReceiverBankingInfo receiverBankingInfo) {
         this.receiverBankingInfo = receiverBankingInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "Claim{" +
+                "claimID='" + claimID + '\'' +
+                ", claimDate=" + claimDate +
+                ", insuredPerson=" + insuredPerson +
+                ", CardNumber='" + CardNumber + '\'' +
+                ", examDate=" + examDate +
+                ", Documents=" + Documents +
+                ", claimAmount=" + claimAmount +
+                ", status=" + status +
+                ", receiverBankingInfo=" + receiverBankingInfo +
+                '}';
     }
 }

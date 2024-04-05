@@ -1,5 +1,5 @@
 
-package Assessment1;
+package assessment1;
 
 public class customerFactory {
     public static Customer createCustomer(String customerType){

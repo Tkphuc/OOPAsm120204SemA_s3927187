@@ -1,7 +1,7 @@
-package Assessment1;
+package assessment1;
 
 public enum Status {
     NEW,
     PROCESSING,
-    DONE;
+    DONE
 }

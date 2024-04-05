@@ -1,4 +1,4 @@
-package Assessment1;
+package assessment1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public abstract class Customer implements ClaimProcessManager{
         this.customerID = "Default";
         this.fullName = "Default";
         this.insuranceCard = null;
-        this.claimsList = null;
+        this.claimsList = new ArrayList<>();
     }
     public Customer(String customerID, String fullName, InsuranceCard insuranceCard) {
         this.customerID = customerID;
@@ -57,7 +57,7 @@ public abstract class Customer implements ClaimProcessManager{
     }
     @Override
     public boolean add(Claim claim) {
-        if(!this.getClaimsList().contains(claim)){
+    if(!(this.getClaimsList().contains(claim))){
             this.getClaimsList().add(claim);
             return  true;}
         else{return  false;}
@@ -65,7 +65,9 @@ public abstract class Customer implements ClaimProcessManager{
 
     @Override
     public void update(Claim claim) {
+        if(this.getClaimsList().contains(claim)){
 
+        }
     }
 
     @Override
@@ -94,8 +96,7 @@ public abstract class Customer implements ClaimProcessManager{
         ClaimList localClaimList = new ClaimList(this.getClaimsList());
 
         while (localClaimList.hasNext()){
-            Claim localClaim = localClaimList.next();
-            return localClaim;
+            return localClaimList.next();
         }
         return null;
     }

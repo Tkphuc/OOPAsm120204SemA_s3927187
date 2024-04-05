@@ -1,4 +1,4 @@
-package Assessment1;
+package assessment1;
 import java.util.List;
 public class ClaimList implements Iterator {
     private List<Claim> claimList;

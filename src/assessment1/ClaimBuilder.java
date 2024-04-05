@@ -1,4 +1,4 @@
-package Assessment1;
+package assessment1;
 
 import java.util.Date;
 import java.util.List;
@@ -37,7 +37,8 @@ public class ClaimBuilder {
         claim.setStatus(status);
         return this;
     }
-    public ClaimBuilder setBankingInfo(ReceiverBankingInfo receiverBankingInfo){
+    public ClaimBuilder setBankingInfo(String bank,String name,String number){
+        ReceiverBankingInfo receiverBankingInfo = new ReceiverBankingInfo(bank,name,number);
         claim.setReceiverBankingInfo(receiverBankingInfo);
         return this;
     }
