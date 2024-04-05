@@ -1,4 +1,4 @@
 package assessment1;
 
-public class View {
+public abstract class View {
 }
