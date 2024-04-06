@@ -30,9 +30,13 @@ public class Main {
         customer1.add(claim1);
         System.out.println(customer1.getAll());
         ((Dependent)customer2).setDependOn(customer1);
+        BankingInfoBuilder bankingInfoBuilder = new BankingInfoBuilder();
+        ReceiverBankingInfo receiverBankingInfo;
+        receiverBankingInfo = bankingInfoBuilder.setBank("ABC").setName("234").setNumber("123").build();
+        /*
         boolean b = ((PolicyHolder) customer1).AddDependent((Dependent)customer2);
         System.out.println(b);
         System.out.println(((PolicyHolder) customer1).hasDependent(customer2));
-        System.out.println(((PolicyHolder)customer1).getDepdendent(customer2));
+        System.out.println(((PolicyHolder)customer1).getDepdendent(customer2));*/
     }
 }
