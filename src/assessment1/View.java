@@ -1,8 +1,7 @@
 package assessment1;
 
-import java.util.Map;
-
 public abstract class View {
+    /*
     public static final String CLAIM_ID = "CLAIM_ID";
     public static final String CLAIM_DATE = "CLAIM_DATE";
     public static final String INSURED_PERSON = "INSURED PERSON";
@@ -20,9 +19,11 @@ public abstract class View {
 
     public static final String DEPENDENTS_LIST = "DEPENDENT_LISTS";
 
-    public static final String DEPEND_ON = "DEPEND_ON";
+    public static final String DEPEND_ON = "DEPEND_ON";*/
 
     public abstract void displayClaim(Claim claim);
-    public abstract Map<String,DynamicAttributeType> displayClaimCreationForm();
+    public abstract Claim displayClaimCreationForm();
     public abstract void displayMainMenu();
+    public abstract Customer displayCustomerCreationForm();
+    public abstract InsuranceCard insuranceCardCreationForm();
 }
