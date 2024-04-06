@@ -1,5 +1,9 @@
 package assessment1;
 // https://www.baeldung.com/java-hashmap-different-value-types
+//https://stackoverflow.com/questions/24863185/what-is-an-assertionerror-in-which-case-should-i-throw-it-from-my-own-code
+//https://www.w3schools.com/java/java_files_create.asp
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -94,10 +98,9 @@ public class ConsoleView extends View{
         String customerType = scanner.nextLine();
         Customer newCustomer = customerFactory.createCustomer(customerType);
 
-        assert newCustomer != null;
+        if (newCustomer == null) throw new AssertionError("This customer object is null");//prevent crashing from null exception error
         newCustomer.setCustomerID(ID);
         newCustomer.setFullName(fullName);
-
         return newCustomer;
     }
     @Override
@@ -115,6 +118,11 @@ public class ConsoleView extends View{
         DateWrapper expirationDate = new DateWrapper();
         Date dateFormatExpirationDate = expirationDate.dateCreate(expirationDateString);
 
+        System.out.println("Enter card holder name: ");
+        String cardHolderName = scanner.nextLine();
+        System.out.println("Enter card holder ID: ");
+        String cardHolderID = scanner.nextLine();
+
         InsuranceCard newCard = new InsuranceCard();
         newCard.setCardID(cardID);
         newCard.setExpirationDate(dateFormatExpirationDate);
@@ -128,6 +136,13 @@ public class ConsoleView extends View{
         System.out.println("1. Manage claim");
         System.out.println("2. Track claim");
         System.out.println("3. Process claim");
+    }
+    public String createNewFileMenu(){
+        Scanner scanner = DataInput.getDataInput().getScanner();
+        System.out.println("Create a new file: ");
+        System.out.println("Enter file name: ");
+        String fileName = scanner.nextLine();
+        return fileName;
     }
 
 }

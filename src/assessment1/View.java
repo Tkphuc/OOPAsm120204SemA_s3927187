@@ -1,5 +1,7 @@
 package assessment1;
 
+import java.io.File;
+
 public abstract class View {
     /*
     public static final String CLAIM_ID = "CLAIM_ID";
@@ -26,4 +28,6 @@ public abstract class View {
     public abstract void displayMainMenu();
     public abstract Customer displayCustomerCreationForm();
     public abstract InsuranceCard insuranceCardCreationForm();
+    public abstract String createNewFileMenu();
+
 }

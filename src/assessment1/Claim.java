@@ -1,10 +1,11 @@
 package assessment1;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
-public class Claim {
+public class Claim implements Serializable {
     private String claimID;
     private Date claimDate;
     private Customer insuredPerson;
@@ -100,18 +101,4 @@ public class Claim {
         this.receiverBankingInfo = receiverBankingInfo;
     }
 
-    @Override
-    public String toString() {
-        return "Claim{" +
-                "claimID='" + claimID + '\'' +
-                ", claimDate=" + claimDate +
-                ", insuredPerson=" + insuredPerson +
-                ", CardNumber='" + CardNumber + '\'' +
-                ", examDate=" + examDate +
-                ", Documents=" + Documents +
-                ", claimAmount=" + claimAmount +
-                ", status=" + status +
-                ", receiverBankingInfo=" + receiverBankingInfo +
-                '}';
-    }
 }
