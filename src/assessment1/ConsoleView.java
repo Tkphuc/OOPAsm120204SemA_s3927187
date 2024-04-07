@@ -2,14 +2,12 @@ package assessment1;
 // https://www.baeldung.com/java-hashmap-different-value-types
 //https://stackoverflow.com/questions/24863185/what-is-an-assertionerror-in-which-case-should-i-throw-it-from-my-own-code
 //https://www.w3schools.com/java/java_files_create.asp
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleView{
 
-    public void displayClaim(Claim claim){
+    public void displayOneClaim(Claim claim){
         System.out.println("All info of the claim");
         System.out.println();
         System.out.println("Claim ID: "+claim.getClaimID());
@@ -35,8 +33,16 @@ public class ConsoleView{
         System.out.println();
 
         System.out.println("Enter claim ID: ");
-        claimBuilder.setID(scanner.nextLine());
-
+        String claimID;
+        IDChecks IDChecks = new IDChecks();
+        do{claimID = scanner.nextLine();
+            if(IDChecks.claimIDCheck(claimID) != null){
+            claimBuilder.setID(scanner.nextLine());
+            break;
+        }else{
+            System.out.println("Input does not follow format of f-10 numbers");
+        }
+        }while (IDChecks.customerIDCheck(claimID) == null);
         System.out.println("Enter claim date: ");
         System.out.println("Enter claim day,month, and year in dd/mm/yyyy format:  ");
         String claimDateString = scanner.nextLine();
@@ -54,7 +60,7 @@ public class ConsoleView{
         claimBuilder.setCardNumber(scanner.nextLine());
         //String cardNumber = scanner.nextLine();
 
-        System.out.println("Enter exam day,month, and year in dd/mm/yyyy format ");
+        System.out.println("Enter exam day,month, and year in dd/mm/yyyy format:  ");
         String examDateString = scanner.nextLine();
         DateWrapper examDate = new DateWrapper();
         claimBuilder.setExamDate(claimDate.dateCreate(examDateString));
@@ -94,6 +100,7 @@ public class ConsoleView{
         String fullName = scanner.nextLine();
         System.out.println("Enter customer ID: ");
         String ID = scanner.nextLine();
+
         System.out.println("Enter customer type (Policy holder or Dependent): ");
         String customerType = scanner.nextLine();
         Customer newCustomer = customerFactory.createCustomer(customerType);
@@ -121,7 +128,15 @@ public class ConsoleView{
         System.out.println("Enter card holder name: ");
         String cardHolderName = scanner.nextLine();
         System.out.println("Enter card holder ID: ");
-        String cardHolderID = scanner.nextLine();
+        String cardHolderID;
+        IDChecks IDChecks = new IDChecks();
+        do{ cardHolderID = scanner.nextLine();
+            if(IDChecks.claimIDCheck(cardHolderID) != null){
+                break;
+            }else{
+                System.out.println("Input does not follow format of f-10 numbers");
+            }
+        }while ((IDChecks.customerIDCheck(cardHolderID) == null));
 
         InsuranceCard newCard = new InsuranceCard();
         newCard.setCardID(cardID);
@@ -134,7 +149,8 @@ public class ConsoleView{
     public void displayMainMenu() {
         System.out.println("Enter 1,2, or 3 to choose a function: ");
         System.out.println("1. Manage claim");
-        System.out.println("2. Manage customer");
+        System.out.println("2. Manage " +
+                "customer");
         System.out.println("Type 'exit' to leave the program ");
     }
     public String createNewFileMenu(){
@@ -170,6 +186,6 @@ public class ConsoleView{
         System.out.println("2. shows a specific card info");
     }
     public void displayAllClaim(){
-        displayClaim();
+
     }
 }

@@ -23,7 +23,10 @@ public class Controller {
     }
     public Customer createCustomer(){
         Customer newCustomer;
+        InsuranceCard insuranceCard1 = createInsuranceCard();
         newCustomer = consoleView.displayCustomerCreationForm();
+        newCustomer.setInsuranceCard(insuranceCard);
+        insuranceCard1.setCardHolder(newCustomer);
         return newCustomer;
     }
     public InsuranceCard createInsuranceCard(){
@@ -79,18 +82,31 @@ public class Controller {
                 do{
                 switch (answer){
                     case "1":
-                        consoleView.displayClaim();
+                        answer = scanner.nextLine();
+                        //read from claim store file
+                        //if such claim exist display claim
+                        //else say that claim does not exist
+                        consoleView.displayOneClaim();
                         break;
                     case "2":
-                        consoleView.displayClaimCreationForm();
+                        Claim newClaim;
+                        newClaim = consoleView.displayClaimCreationForm();
+                        //store claim to file
+                        //If claim exist then nice error message
                         break;
                     case "3":
-                        consoleView.displayClaim();
+                        consoleView.displayAllClaim();
                         break;
                     case "4":
+                        answer = scanner.nextLine();
+                        //input claim ID
+                        //Return name and ID of claim owner
                         //consoleView.searchClaimOwner;
                         break;
                     case "5":
+                        //input claim ID.
+                        //Re-enter info as needed
+                        //set new info to claim or create new claim to replace the old one
                         //consoleView.updateClaim();
                         break;
                     case "exit":
@@ -107,9 +123,11 @@ public class Controller {
                     switch (answer){
                         case "1":
                             //consoleView.displayCustomers();
+                            //Show all customers
                             break;
                         case "2":
                             //consoleView.displayOneCustomer();
+                            //Show info of one customer
                             break;
                         case "3":
                             consoleView.displayCustomerCreationForm();
@@ -137,6 +155,8 @@ public class Controller {
                             //consoleView.displayInsuranceCards();
                             break;
                         case "2":
+                            //
+
                             //consoleView.displayAnInsuranceCard();
                             break;
                         case "exit":
