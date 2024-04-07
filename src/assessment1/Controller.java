@@ -1,6 +1,8 @@
 package assessment1;
 //https://www.w3schools.com/java/java_files_read.asp
+//https://stackoverflow.com/questions/4388054/java-how-to-fix-the-unchecked-cast-warning
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
@@ -48,27 +50,58 @@ public class Controller {
             }
         return newFile;
     }
-    public void readFromFileToConsole(String fileName){
+    public List<Customer> readCustomerFile(String fileName) throws Exception{
+        /*
         File myFile = new File(fileName + ".txt");
         try (BufferedReader reader = new BufferedReader(new FileReader(myFile))){
             String nextLine;
             while ((nextLine = reader.readLine()) != null)
             {
-                System.out.println(nextLine);
+
             }
         }catch (IOException e){
             System.err.printf("% file not found\n",myFile);
-        }
+        }*/
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName+".txt"));
+        List<Customer> customers = ((List<Customer>)in.readObject());
+        in.close();
+        return customers;
     }
-    public void writeObjectToFile(String fileName,Object object){
-        File file = new File(fileName);
+    public List<Claim> readClaimFile(String fileName) throws Exception{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName+".txt"));
+        List<Claim> claims = ((List<Claim>)in.readObject());
+        in.close();
+        return claims;
+    }
+    public List<InsuranceCard> readInsuranceCardFile(String fileName) throws Exception{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName+".txt"));
+        List<InsuranceCard> cards = ((List<InsuranceCard>)in.readObject());
+        in.close();
+        return cards;
+    }
+    public void writeCustomerFile(String fileName,List<Customer> customers)throws Exception{
+        /*
+        File file = new File(fileName+".txt");
         try(
         FileOutputStream fileOutput = new FileOutputStream(fileName,true);
         ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);){
         objectOutput.writeObject(object);}
         catch (IOException e){
             System.err.printf("Error write to file\n");
-        }
+        }*/
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName+".txt"));
+        out.writeObject(customers);
+        out.close();
+    }
+    public void writeClaimFile(String fileName,List<Claim> claims)throws Exception{
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName+".txt"));
+        out.writeObject(claims);
+        out.close();
+    }
+    public void writeInsuranceCardToFile(String fileName,List<InsuranceCard> cards)throws Exception{
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName+".txt"));
+        out.writeObject(cards);
+        out.close();
     }
     public void eventLoop(){
         String answer;
@@ -83,6 +116,7 @@ public class Controller {
                 switch (answer){
                     case "1":
                         answer = scanner.nextLine();
+
                         //read from claim store file
                         //if such claim exist display claim
                         //else say that claim does not exist
