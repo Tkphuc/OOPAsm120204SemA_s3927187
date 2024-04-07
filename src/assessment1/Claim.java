@@ -101,4 +101,20 @@ public class Claim implements Serializable {
         this.receiverBankingInfo = receiverBankingInfo;
     }
 
+    @Override
+    public int hashCode() {
+        return this.claimID.length();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other == this){
+            return true;
+        }
+        if(!(other instanceof Claim)){
+            return false;
+        }
+        Claim otherClaim = (Claim) other;
+        return this.claimID.equals(otherClaim.claimID);
+    }
 }

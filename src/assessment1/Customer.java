@@ -101,5 +101,20 @@ public abstract class Customer implements ClaimProcessManager, Serializable {
         return null;
     }
 
+    @Override
+    public int hashCode() {
+        return this.customerID.length();
+    }
 
+    @Override
+    public boolean equals(Object other) {
+        if(other == this){
+            return true;
+        }
+        if(!(other instanceof Customer)){
+            return false;
+        }
+        Customer otherCustomer = (Customer) other;
+        return this.customerID.equals(otherCustomer.customerID);
+    }
 }

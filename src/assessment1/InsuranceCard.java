@@ -54,4 +54,21 @@ public class InsuranceCard implements Serializable {
         this.expirationDate = expirationDate;
     }
 
+    @Override
+    public int hashCode() {
+        return this.cardID.length();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other == this){
+            return true;
+        }
+        if(!(other instanceof Claim)){
+            return false;
+        }
+        InsuranceCard otherCard = (InsuranceCard) other;
+        return this.cardID.equals(otherCard.cardID);
+    }
+    }
 }

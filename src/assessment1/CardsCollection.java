@@ -9,7 +9,7 @@ public class CardsCollection implements Iterator {
     public CardsCollection() {
     }
 
-    public CardsCollection(List<InsuranceCard> insuranceCardList {
+    public CardsCollection(List<InsuranceCard> insuranceCardList ){
         this.insuranceCardList = insuranceCardList;
         this.currentItem = 0;
     }

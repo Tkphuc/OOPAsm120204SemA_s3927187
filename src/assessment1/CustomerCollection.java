@@ -33,6 +33,7 @@ public class CustomerCollection implements Iterator {
         return customerList.get(currentItem++);
     }
     public void sortCustomerCollection(){
-        customerList.sort();
+        customerList.sort(Comparator.comparing(Customer::getCustomerID));
+        //Sort ID lexicographically
     }
 }
