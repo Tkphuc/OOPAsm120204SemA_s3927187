@@ -1,6 +1,5 @@
 package assessment1;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class CustomerCollection implements Iterator {
     public Customer next() {
         return customerList.get(currentItem++);
     }
-    public void sortCustomerCollection(){
+    public void sortCollection(){
         customerList.sort(Comparator.comparing(Customer::getCustomerID));
         //Sort ID lexicographically
     }

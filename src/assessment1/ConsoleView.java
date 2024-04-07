@@ -167,6 +167,8 @@ public class ConsoleView{
         System.out.println("Policy Owner:  "+insuranceCard.getPolicyOwner());
         System.out.println("Card expiration date: "+insuranceCard.getExpirationDate());
     }
+    public void updateClaim(){}
+    public void
 
     public void displayMainMenu() {
         System.out.println("Enter 1,2, or 3 to choose a function: ");
@@ -198,8 +200,11 @@ public class ConsoleView{
         System.out.println("1. shows all customers' info");
         System.out.println("2. shows a specific customer info");
         System.out.println("3. Register new customer");
-        System.out.println("4. Update a customer");
         System.out.println("4. Delete a customer");
+        System.out.println("5. Update a customer claim ");
+        System.out.println("6. get a claim of customer");
+        System.out.println("7. get  all claim of a customer");
+        System.out.println("8. delete a claim of a customer");
     }
     public void manageInsuranceCardMenu(){
         System.out.println("Manage insurance card menu");
@@ -207,5 +212,6 @@ public class ConsoleView{
         System.out.println("1. shows all cards' info");
         System.out.println("2. shows a specific card info");
     }
+
 
 }

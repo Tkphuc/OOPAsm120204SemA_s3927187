@@ -2,7 +2,6 @@ package assessment1;
 //https://www.w3schools.com/java/java_files_read.asp
 //https://stackoverflow.com/questions/4388054/java-how-to-fix-the-unchecked-cast-warning
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,6 +29,16 @@ public class Controller {
         newCustomer.setInsuranceCard(insuranceCard);
         insuranceCard1.setCardHolder(newCustomer);
         return newCustomer;
+    }
+    public void updateAClaimOfCustomer(Customer customer){
+        Claim claimToUpdate = new Claim();
+        customer.update(claimToUpdate);
+    }
+    public void getAllClaimOfCustomer(Customer customer){
+        customer.getAll();
+    }
+    public void deleteAClaimOfCustomer(Customer customer){
+        customer.delete();
     }
     public InsuranceCard createInsuranceCard(){
         InsuranceCard newInsuranceCard;
@@ -92,9 +101,9 @@ public class Controller {
             if (answer.equals("1")) {
                 consoleView.manageClaimMenu();
                 answer = scanner.nextLine();
-                ClaimList claimList;
+                ClaimCollection claimCollection;
                 try {
-                    claimList = new ClaimList( readClaimFile("claim.txt"));
+                    claimCollection = new ClaimCollection( readClaimFile("claim.txt"));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -114,9 +123,9 @@ public class Controller {
                             }
                         }while ((IDChecks.customerIDCheck(answer) == null));
                         Claim claimToRead = new Claim();
-                        while (claimList.hasNext()){
-                            if(claimList.next().getClaimID().equals(answer)){
-                                claimToRead = claimList.next();
+                        while (claimCollection.hasNext()){
+                            if(claimCollection.next().getClaimID().equals(answer)){
+                                claimToRead = claimCollection.next();
                             }
                         }
                         if(claimToRead != null){
@@ -127,16 +136,17 @@ public class Controller {
                         boolean earlyBreak = false;
                         Claim newClaim;
                         newClaim = consoleView.displayClaimCreationForm();
-                        while(claimList.hasNext()){
-                            if(newClaim.equals(claimList.next())){
+                        while(claimCollection.hasNext()){
+                            if(newClaim.equals(claimCollection.next())){
                                 System.out.println("Claim already exist.");
                                 earlyBreak = true;
                                 break;
-                            }else {claimList.addClaim(newClaim);}
+                            }else {
+                                claimCollection.addClaim(newClaim);}
                         }
                         if (!(earlyBreak)) {
                             try {
-                                writeClaimFile("claim.txt", claimList.getClaimList());
+                                writeClaimFile("claim.txt", claimCollection.getClaimList());
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
@@ -144,8 +154,8 @@ public class Controller {
                         break;
                     case "1":
                         System.out.println("All claims: ");
-                        while(claimList.hasNext()){
-                            consoleView.displayOneClaim(claimList.next());
+                        while(claimCollection.hasNext()){
+                            consoleView.displayOneClaim(claimCollection.next());
                         }
                         break;
                     case "4":
@@ -242,9 +252,9 @@ public class Controller {
             } else if (answer.equals("3")) {
                 consoleView.manageInsuranceCardMenu();
                 answer = scanner.nextLine();
-                CardsCollection cardsCollection = new CardsCollection();
+                CardCollection cardCollection = new CardCollection();
                 try {
-                    cardsCollection = new CardsCollection(readInsuranceCardFile("InsuranceCard.txt"));
+                    cardCollection = new CardCollection(readInsuranceCardFile("InsuranceCard.txt"));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -262,17 +272,17 @@ public class Controller {
                                 }
                             }while ((IDCheck.cardIDCheck(answer)==null));
                             InsuranceCard cardToRead = new InsuranceCard();
-                            while(cardsCollection.hasNext()){
-                                if(cardsCollection.next().getCardID().equals(answer)){
-                                    cardToRead = cardsCollection.next();
+                            while(cardCollection.hasNext()){
+                                if(cardCollection.next().getCardID().equals(answer)){
+                                    cardToRead = cardCollection.next();
                                 }
                             }
                             consoleView.displayInsuranceCard(cardToRead);
                             break;
                         case "2":
                             System.out.println("All cards: ");
-                            while (cardsCollection.hasNext()){
-                            consoleView.displayInsuranceCard(cardsCollection.next());}
+                            while (cardCollection.hasNext()){
+                            consoleView.displayInsuranceCard(cardCollection.next());}
                             break;
                         case "exit":
                             break;

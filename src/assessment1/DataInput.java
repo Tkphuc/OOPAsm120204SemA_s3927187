@@ -2,7 +2,7 @@ package assessment1;
 
 import java.util.Scanner;
 
-public class DataInput implements Decorator {
+public class DataInput {
     private static DataInput input;
     private Scanner scanner;
     private DataInput(){scanner = new Scanner(System.in);}

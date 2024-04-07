@@ -6,17 +6,15 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import java.util.regex.*;
-import java.util.Calendar;
+
 
 
 public class DateWrapper{
     private Date date;
-    private Calendar calendar;
-    private static final String dateFormat = "dd/MM/yyyy";
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
     //private Pattern pattern = Pattern.compile("\\d{2}+\\/+\\d{2}+\\/+\\d{4}");
-    private  DateFormat format = new SimpleDateFormat(dateFormat);
+    private  DateFormat format = new SimpleDateFormat(DATE_FORMAT);
     private Matcher matcher;
     //regex: \d{2}+\/+\d{2}+\/+\d{4}
     public DateWrapper(Date date){

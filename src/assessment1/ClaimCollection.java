@@ -1,12 +1,12 @@
 package assessment1;
 import java.util.Comparator;
 import java.util.List;
-public class ClaimList implements Iterator {
+public class ClaimCollection implements Iterator {
     private List<Claim> claimList;
     private int currentItem;
 
-    public ClaimList(){}
-    public ClaimList(List<Claim> claimList) {
+    public ClaimCollection(){}
+    public ClaimCollection(List<Claim> claimList) {
         this.claimList = claimList;
         this.currentItem =0;
     }
@@ -30,7 +30,7 @@ public class ClaimList implements Iterator {
         return claimList.get(currentItem++);
     }
 
-    public void sortClaimCollection(){
+    public void sortCollection(){
         claimList.sort(Comparator.comparing(Claim::getClaimID));
         //Sort ID lexicographically
     }

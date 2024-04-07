@@ -81,10 +81,10 @@ public abstract class Customer implements ClaimProcessManager, Serializable {
     }
     @Override
     public Claim getOne(String claimID) {
-        ClaimList localClaimList = new ClaimList(this.getClaimsList());
-        while (localClaimList.hasNext()){
+        ClaimCollection localClaimCollection = new ClaimCollection(this.getClaimsList());
+        while (localClaimCollection.hasNext()){
             Claim localClaim;
-            localClaim = localClaimList.next();
+            localClaim = localClaimCollection.next();
             if(localClaim.getClaimID().equals(claimID)){
                 return localClaim;
             }
@@ -94,9 +94,9 @@ public abstract class Customer implements ClaimProcessManager, Serializable {
 
     @Override
     public Claim getAll() {
-        ClaimList localClaimList = new ClaimList(this.getClaimsList());
-        if(localClaimList.hasNext()){
-            return localClaimList.next();
+        ClaimCollection localClaimCollection = new ClaimCollection(this.getClaimsList());
+        if(localClaimCollection.hasNext()){
+            return localClaimCollection.next();
         }
         return null;
     }
