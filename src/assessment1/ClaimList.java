@@ -1,4 +1,5 @@
 package assessment1;
+import java.util.Comparator;
 import java.util.List;
 public class ClaimList implements Iterator {
     private List<Claim> claimList;
@@ -13,6 +14,9 @@ public class ClaimList implements Iterator {
     public List<Claim> getClaimList() {
         return claimList;
     }
+    public void addClaim(Claim claim){
+        claimList.add(claim);
+    }
     @Override
     public boolean hasNext() {
 
@@ -26,4 +30,8 @@ public class ClaimList implements Iterator {
         return claimList.get(currentItem++);
     }
 
+    public void sortClaimCollection(){
+        claimList.sort(Comparator.comparing(Claim::getClaimID));
+        //Sort ID lexicographically
+    }
 }

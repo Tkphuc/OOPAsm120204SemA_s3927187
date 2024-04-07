@@ -144,7 +144,29 @@ public class ConsoleView{
         newCard.setPolicyOwner(policyOwner);
         return newCard;
     }
+    public void displayOneCustomer(Customer customer){
+        System.out.println("Customer name: "+customer.getFullName());
+        System.out.println("Customer ID: "+customer.getCustomerID());
+        System.out.println("Customer card : "+customer.getInsuranceCard().getCardID());
+        if(customer instanceof PolicyHolder){
+        System.out.println("Customer type: Policy holder");
+        System.out.println("Customer dependents");
 
+        }else if(customer instanceof Dependent){
+            System.out.println("Customer type: dependent");
+            System.out.println("Depend on ");
+            System.out.println("ID: "+((Dependent) customer).getDependOn().getCustomerID());
+            System.out.println("Full name: "+((Dependent) customer).getDependOn().getFullName());
+        }
+        customer.getAll();
+    }
+    public  void displayInsuranceCard(InsuranceCard insuranceCard){
+        System.out.println("Card ID"+insuranceCard.getCardID());
+        System.out.println("Card holder ID:"+insuranceCard.getCardHolder().getCustomerID());
+        System.out.println("Card holder name:"+insuranceCard.getCardHolder().getFullName());
+        System.out.println("Policy Owner:  "+insuranceCard.getPolicyOwner());
+        System.out.println("Card expiration date: "+insuranceCard.getExpirationDate());
+    }
 
     public void displayMainMenu() {
         System.out.println("Enter 1,2, or 3 to choose a function: ");
@@ -185,7 +207,5 @@ public class ConsoleView{
         System.out.println("1. shows all cards' info");
         System.out.println("2. shows a specific card info");
     }
-    public void displayAllClaim(){
 
-    }
 }

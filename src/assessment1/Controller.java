@@ -2,13 +2,13 @@ package assessment1;
 //https://www.w3schools.com/java/java_files_read.asp
 //https://stackoverflow.com/questions/4388054/java-how-to-fix-the-unchecked-cast-warning
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
     private Claim claim;
     private Customer customer;
-
     private InsuranceCard insuranceCard;
     private ConsoleView consoleView;
 
@@ -51,17 +51,6 @@ public class Controller {
         return newFile;
     }
     public List<Customer> readCustomerFile(String fileName) throws Exception{
-        /*
-        File myFile = new File(fileName + ".txt");
-        try (BufferedReader reader = new BufferedReader(new FileReader(myFile))){
-            String nextLine;
-            while ((nextLine = reader.readLine()) != null)
-            {
-
-            }
-        }catch (IOException e){
-            System.err.printf("% file not found\n",myFile);
-        }*/
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName+".txt"));
         List<Customer> customers = ((List<Customer>)in.readObject());
         in.close();
@@ -80,15 +69,6 @@ public class Controller {
         return cards;
     }
     public void writeCustomerFile(String fileName,List<Customer> customers)throws Exception{
-        /*
-        File file = new File(fileName+".txt");
-        try(
-        FileOutputStream fileOutput = new FileOutputStream(fileName,true);
-        ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);){
-        objectOutput.writeObject(object);}
-        catch (IOException e){
-            System.err.printf("Error write to file\n");
-        }*/
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName+".txt"));
         out.writeObject(customers);
         out.close();
@@ -112,27 +92,64 @@ public class Controller {
             if (answer.equals("1")) {
                 consoleView.manageClaimMenu();
                 answer = scanner.nextLine();
+                ClaimList claimList;
+                try {
+                    claimList = new ClaimList( readClaimFile("claim.txt"));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 do{
                 switch (answer){
-                    case "1":
-                        answer = scanner.nextLine();
-
-                        //read from claim store file
-                        //if such claim exist display claim
-                        //else say that claim does not exist
-                        consoleView.displayOneClaim();
+                    case "3":
+                        //System.out.println("Enter file name: ");
+                        //answer = scanner.nextLine();
+                        System.out.println("Enter claim ID: ");
+                        IDChecks IDChecks = new IDChecks();
+                        do{ answer = scanner.nextLine();
+                            if(IDChecks.claimIDCheck(answer) != null){
+                                break;
+                            }else{
+                                System.out.println("Input does not follow format of f-10 numbers");
+                            }
+                        }while ((IDChecks.customerIDCheck(answer) == null));
+                        Claim claimToRead = null;
+                        while (claimList.hasNext()){
+                            if(claimList.next().getClaimID().equals(answer)){
+                                claimToRead = claimList.next();
+                            }
+                        }
+                        if(claimToRead != null){
+                        consoleView.displayOneClaim(claimToRead);}
+                        else{System.out.println("Claim does not exist");}
                         break;
                     case "2":
+                        boolean earlyBreak = false;
                         Claim newClaim;
                         newClaim = consoleView.displayClaimCreationForm();
-                        //store claim to file
-                        //If claim exist then nice error message
+                        while(claimList.hasNext()){
+                            if(newClaim.equals(claimList.next())){
+                                System.out.println("Claim already exist.");
+                                earlyBreak = true;
+                                break;
+                            }else {claimList.addClaim(newClaim);}
+                        }
+                        if (!(earlyBreak)) {
+                            try {
+                                writeClaimFile("claim.txt", claimList.getClaimList());
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                         break;
-                    case "3":
-                        consoleView.displayAllClaim();
+                    case "1":
+                        while(claimList.hasNext()){
+                            System.out.println("All claims: ");
+                            consoleView.displayOneClaim(claimList.next());
+                        }
                         break;
                     case "4":
                         answer = scanner.nextLine();
+
                         //input claim ID
                         //Return name and ID of claim owner
                         //consoleView.searchClaimOwner;
@@ -149,14 +166,14 @@ public class Controller {
                     default:
                         System.out.println("Invalid input");
                         }
-                }while(answer.equalsIgnoreCase("exit"));
+                }while(!answer.equalsIgnoreCase("exit"));
             } else if (answer.equals("2")) {
                 consoleView.manageCustomerMenu();
                 answer = scanner.nextLine();
                 do{
                     switch (answer){
                         case "1":
-                            //consoleView.displayCustomers();
+                            consoleView.displayCustomers();
                             //Show all customers
                             break;
                         case "2":
@@ -178,7 +195,7 @@ public class Controller {
                         default:
                             System.out.println("Invalid input");
                     }
-                }while(answer.equalsIgnoreCase("exit"));
+                }while(!answer.equalsIgnoreCase("exit"));
 
             } else if (answer.equals("3")) {
                 consoleView.manageInsuranceCardMenu();
@@ -186,7 +203,7 @@ public class Controller {
                 do{
                     switch (answer){
                         case "1":
-                            //consoleView.displayInsuranceCards();
+                            consoleView.displayInsuranceCard();
                             break;
                         case "2":
                             //

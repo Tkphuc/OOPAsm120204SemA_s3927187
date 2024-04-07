@@ -70,5 +70,5 @@ public class InsuranceCard implements Serializable {
         InsuranceCard otherCard = (InsuranceCard) other;
         return this.cardID.equals(otherCard.cardID);
     }
-    }
+
 }
