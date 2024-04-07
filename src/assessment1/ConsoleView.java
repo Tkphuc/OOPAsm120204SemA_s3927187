@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
 
-public class ConsoleView extends View{
+public class ConsoleView{
 
     public void displayClaim(Claim claim){
         System.out.println("All info of the claim");
@@ -84,7 +84,7 @@ public class ConsoleView extends View{
         claimBuilder.setBankingInfo(bankName,name,number);
         return newClaim = claimBuilder.build();
     }
-    @Override
+
     public Customer displayCustomerCreationForm(){
         Scanner scanner = DataInput.getDataInput().getScanner();
         System.out.println("Customer creation form");
@@ -103,7 +103,7 @@ public class ConsoleView extends View{
         newCustomer.setFullName(fullName);
         return newCustomer;
     }
-    @Override
+
     public InsuranceCard insuranceCardCreationForm(){
         Scanner scanner = DataInput.getDataInput().getScanner();
 
@@ -130,12 +130,12 @@ public class ConsoleView extends View{
         return newCard;
     }
 
-    @Override
+
     public void displayMainMenu() {
         System.out.println("Enter 1,2, or 3 to choose a function: ");
         System.out.println("1. Manage claim");
-        System.out.println("2. Track claim");
-        System.out.println("3. Process claim");
+        System.out.println("2. Manage customer");
+        System.out.println("Type 'exit' to leave the program ");
     }
     public String createNewFileMenu(){
         Scanner scanner = DataInput.getDataInput().getScanner();
@@ -144,5 +144,32 @@ public class ConsoleView extends View{
         String fileName = scanner.nextLine();
         return fileName;
     }
-
+    public void manageClaimMenu(){
+        System.out.println("Manage claim menu");
+        System.out.println();
+        System.out.println("1: Show all existing claims");
+        System.out.println("2: File new claim");
+        System.out.println("3: View a specific claim");
+        System.out.println("4 View whose does a claim belongs");
+        System.out.println("5. Update a claim");
+        System.out.println("Type 'exit' to leave the program ");
+    }
+    public void manageCustomerMenu(){
+        System.out.println("Manage customer menu");
+        System.out.println();
+        System.out.println("1. shows all customers' info");
+        System.out.println("2. shows a specific customer info");
+        System.out.println("3. Register new customer");
+        System.out.println("4. Update a customer");
+        System.out.println("4. Delete a customer");
+    }
+    public void manageInsuranceCardMenu(){
+        System.out.println("Manage insurance card menu");
+        System.out.println();
+        System.out.println("1. shows all cards' info");
+        System.out.println("2. shows a specific card info");
+    }
+    public void displayAllClaim(){
+        displayClaim();
+    }
 }

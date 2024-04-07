@@ -8,9 +8,9 @@ public class Controller {
     private Customer customer;
 
     private InsuranceCard insuranceCard;
-    private View consoleView;
+    private ConsoleView consoleView;
 
-    public Controller(Claim claim, Customer customer, InsuranceCard insuranceCard, View consoleView) {
+    public Controller(Claim claim, Customer customer, InsuranceCard insuranceCard, ConsoleView consoleView) {
         this.claim = claim;
         this.customer = customer;
         this.insuranceCard = insuranceCard;
@@ -57,9 +57,100 @@ public class Controller {
             System.err.printf("% file not found\n",myFile);
         }
     }
-    public void writeObjectToFile(){
+    public void writeObjectToFile(String fileName,Object object){
+        File file = new File(fileName);
+        try(
+        FileOutputStream fileOutput = new FileOutputStream(fileName,true);
+        ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);){
+        objectOutput.writeObject(object);}
+        catch (IOException e){
+            System.err.printf("Error write to file\n");
+        }
+    }
+    public void eventLoop(){
+        String answer;
+        Scanner scanner = DataInput.getDataInput().getScanner();
+        do {
+            consoleView.displayMainMenu();
+            answer = scanner.nextLine();
+            if (answer.equals("1")) {
+                consoleView.manageClaimMenu();
+                answer = scanner.nextLine();
+                do{
+                switch (answer){
+                    case "1":
+                        consoleView.displayClaim();
+                        break;
+                    case "2":
+                        consoleView.displayClaimCreationForm();
+                        break;
+                    case "3":
+                        consoleView.displayClaim();
+                        break;
+                    case "4":
+                        //consoleView.searchClaimOwner;
+                        break;
+                    case "5":
+                        //consoleView.updateClaim();
+                        break;
+                    case "exit":
+                        //exit the switch cases
+                        break;
+                    default:
+                        System.out.println("Invalid input");
+                        }
+                }while(answer.equalsIgnoreCase("exit"));
+            } else if (answer.equals("2")) {
+                consoleView.manageCustomerMenu();
+                answer = scanner.nextLine();
+                do{
+                    switch (answer){
+                        case "1":
+                            //consoleView.displayCustomers();
+                            break;
+                        case "2":
+                            //consoleView.displayOneCustomer();
+                            break;
+                        case "3":
+                            consoleView.displayCustomerCreationForm();
+                            break;
+                        case "4":
+                            //consoleView.updateACustomer();
+                            break;
+                        case "5":
+                            //consoleView.deleteACustomer();
+                            break;
+                        case "exit":
+                            //exit the switch cases
+                            break;
+                        default:
+                            System.out.println("Invalid input");
+                    }
+                }while(answer.equalsIgnoreCase("exit"));
+
+            } else if (answer.equals("3")) {
+                consoleView.manageInsuranceCardMenu();
+                answer = scanner.nextLine();
+                do{
+                    switch (answer){
+                        case "1":
+                            //consoleView.displayInsuranceCards();
+                            break;
+                        case "2":
+                            //consoleView.displayAnInsuranceCard();
+                            break;
+                        case "exit":
+                            //exit the switch cases
+                            break;
+                        default:
+                            System.out.println("Invalid input");
+                    }
+                }while(!answer.equalsIgnoreCase("exit"));
+            }else if(answer.equalsIgnoreCase("exit")){
+                System.out.println("Goodbye");
+            }
+        }while (!answer.equalsIgnoreCase("exit"));
 
     }
-
 
 }
