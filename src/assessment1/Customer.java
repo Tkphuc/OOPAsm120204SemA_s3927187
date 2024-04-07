@@ -108,6 +108,13 @@ public abstract class Customer implements ClaimProcessManager, Serializable {
 
     @Override
     public boolean equals(Object other) {
-        F
+        if(other == this){
+            return true;
+        }
+        if(!(other instanceof Customer)){
+            return false;
+        }
+        Customer customer = (Customer) other;
+        return this.customerID.equals(((Customer) other).customerID);
     }
 }

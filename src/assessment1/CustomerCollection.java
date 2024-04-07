@@ -8,8 +8,7 @@ public class CustomerCollection implements Iterator {
     private List<Customer> customerList;
     private  int currentItem;
 
-    public CustomerCollection() {
-    }
+    public CustomerCollection() {}
     public CustomerCollection(List<Customer> customerList) {
         this.customerList = customerList;
         this.currentItem = 0;
@@ -18,7 +17,9 @@ public class CustomerCollection implements Iterator {
     public List<Customer> getCustomerList() {
         return customerList;
     }
-
+    public void addCustomer(Customer customer){
+        customerList.add(customer);
+    }
     @Override
     public boolean hasNext() {
         if(currentItem >= customerList.size()){
@@ -29,7 +30,7 @@ public class CustomerCollection implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public Customer next() {
         return customerList.get(currentItem++);
     }
     public void sortCustomerCollection(){

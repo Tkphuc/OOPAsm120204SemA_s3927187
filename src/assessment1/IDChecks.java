@@ -6,7 +6,7 @@ public class IDChecks {
     //private String inputString;
     //regex pattern for claimid regex pattern for claimid [f]*\d{10}
     private final Pattern claimIDpattern = Pattern.compile("[f]*\\d{10}");
-    private final Pattern customerIDPattern = Pattern.compile("[f]*\\d{7}");
+    private final Pattern customerIDPattern = Pattern.compile("[c]*\\d{7}");
     private final Pattern cardIDPattern = Pattern.compile("\\d{10}");
     public IDChecks() {
     }

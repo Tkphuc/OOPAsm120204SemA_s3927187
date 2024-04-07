@@ -103,16 +103,17 @@ public class Controller {
                     case "3":
                         //System.out.println("Enter file name: ");
                         //answer = scanner.nextLine();
-                        System.out.println("Enter claim ID: ");
+
                         IDChecks IDChecks = new IDChecks();
-                        do{ answer = scanner.nextLine();
+                        do{ System.out.println("Enter claim ID: ");
+                            answer = scanner.nextLine();
                             if(IDChecks.claimIDCheck(answer) != null){
                                 break;
                             }else{
                                 System.out.println("Input does not follow format of f-10 numbers");
                             }
                         }while ((IDChecks.customerIDCheck(answer) == null));
-                        Claim claimToRead = null;
+                        Claim claimToRead = new Claim();
                         while (claimList.hasNext()){
                             if(claimList.next().getClaimID().equals(answer)){
                                 claimToRead = claimList.next();
@@ -142,8 +143,8 @@ public class Controller {
                         }
                         break;
                     case "1":
+                        System.out.println("All claims: ");
                         while(claimList.hasNext()){
-                            System.out.println("All claims: ");
                             consoleView.displayOneClaim(claimList.next());
                         }
                         break;
@@ -170,18 +171,59 @@ public class Controller {
             } else if (answer.equals("2")) {
                 consoleView.manageCustomerMenu();
                 answer = scanner.nextLine();
+                CustomerCollection customerCollection = new CustomerCollection();
+                try {
+                    customerCollection = new CustomerCollection(readCustomerFile("customer.txt"));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 do{
                     switch (answer){
                         case "1":
-                            consoleView.displayCustomers();
+                            System.out.println("All customer: ");
+                            while (customerCollection.hasNext()){
+                                consoleView.displayOneCustomer(customerCollection.next());
+                            }
                             //Show all customers
                             break;
                         case "2":
-                            //consoleView.displayOneCustomer();
-                            //Show info of one customer
+                            IDChecks IDCheck = new IDChecks();
+                            do{
+                                System.out.println("Enter customer ID: ");
+                                answer = scanner.nextLine();
+                                if(IDCheck.customerIDCheck(answer) != null){
+                                    break;
+                                }else{
+                                    System.out.println("Input does not follow format of f-10 number");
+                                }
+                            } while ((IDCheck.customerIDCheck(answer) == null));
+                            Customer customerToRead = null;
+                            while(customerCollection.hasNext()){
+                                if(customerCollection.next().getCustomerID().equals(answer)){
+                                    customerToRead = customerCollection.next();
+                                }
+                            }
+                            if(customerToRead != null){
+                            consoleView.displayOneCustomer(customerToRead);}
+                            else {System.out.println("No such customer exist");}
                             break;
                         case "3":
-                            consoleView.displayCustomerCreationForm();
+                            boolean earlyBreak = false;
+                            Customer newCustomer = consoleView.displayCustomerCreationForm();
+                            while(customerCollection.hasNext()){
+                                if(newCustomer.equals(customerCollection.next())){
+                                    System.out.println("Claim already exist.");
+                                    earlyBreak = true;
+                                    break;
+                                }else {customerCollection.addCustomer(newCustomer);}
+                            }
+                            if(!(earlyBreak)){
+                                try {
+                                    writeCustomerFile("customer.txt", customerCollection.getCustomerList());
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
                             break;
                         case "4":
                             //consoleView.updateACustomer();
@@ -200,18 +242,39 @@ public class Controller {
             } else if (answer.equals("3")) {
                 consoleView.manageInsuranceCardMenu();
                 answer = scanner.nextLine();
+                CardsCollection cardsCollection = new CardsCollection();
+                try {
+                    cardsCollection = new CardsCollection(readInsuranceCardFile("InsuranceCard.txt"));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                IDChecks IDCheck = new IDChecks();
                 do{
                     switch (answer){
                         case "1":
-                            consoleView.displayInsuranceCard();
+                            do{
+                                System.out.println("Enter insurance card ID: ");
+                                answer = scanner.nextLine();
+                                if(IDCheck.cardIDCheck(answer) != null){
+                                    break;
+                                }else{
+                                    System.out.println("Input does not follow format of 10 numbers");
+                                }
+                            }while ((IDCheck.cardIDCheck(answer)==null));
+                            InsuranceCard cardToRead = new InsuranceCard();
+                            while(cardsCollection.hasNext()){
+                                if(cardsCollection.next().getCardID().equals(answer)){
+                                    cardToRead = cardsCollection.next();
+                                }
+                            }
+                            consoleView.displayInsuranceCard(cardToRead);
                             break;
                         case "2":
-                            //
-
-                            //consoleView.displayAnInsuranceCard();
+                            System.out.println("All cards: ");
+                            while (cardsCollection.hasNext()){
+                            consoleView.displayInsuranceCard(cardsCollection.next());}
                             break;
                         case "exit":
-                            //exit the switch cases
                             break;
                         default:
                             System.out.println("Invalid input");

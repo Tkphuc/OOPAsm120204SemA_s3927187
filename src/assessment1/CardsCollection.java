@@ -28,7 +28,7 @@ public class CardsCollection implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public InsuranceCard next() {
         return insuranceCardList.get(currentItem++);
     }
 }
