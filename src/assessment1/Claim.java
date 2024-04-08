@@ -1,6 +1,7 @@
 package assessment1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Claim implements Serializable {
     private Customer insuredPerson;
     private String CardNumber;
     private Date examDate;
-    private List<String> Documents;
+    private List<String> Documents = new ArrayList<>();
     private double claimAmount;
     private Status status;
     private ReceiverBankingInfo receiverBankingInfo;

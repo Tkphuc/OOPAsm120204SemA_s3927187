@@ -21,9 +21,6 @@ public class ConsoleView{
         System.out.println("Claim status: "+claim.getStatus());
         System.out.println("Receiver Banking info: "+claim.getReceiverBankingInfo());
     }
-    public void displayClaimStatus(Claim claim){
-        System.out.println("Current Status" + claim.getStatus());
-    }
     public Claim displayClaimCreation(){
         ClaimBuilder claimBuilder = new ClaimBuilder();
         Claim newClaim;
@@ -41,7 +38,7 @@ public class ConsoleView{
         }else{
             System.out.println("Input does not follow format of f-10 numbers");
         }
-        }while (IDChecks.customerIDCheck(claimID) == null);
+        }while (IDChecks.customerIDCheck(claimID) =="");
         System.out.println("Enter claim date: ");
         System.out.println("Enter claim day,month, and year in dd/mm/yyyy format:  ");
         String claimDateString = scanner.nextLine();
@@ -89,8 +86,7 @@ public class ConsoleView{
         String name = scanner.nextLine();
         System.out.println("Enter number: ");
         String number = scanner.nextLine();
-        ReceiverBankingInfo bankingInfo = new ReceiverBankingInfo(bankName,name,number);
-        return bankingInfo;
+        return new ReceiverBankingInfo(bankName,name,number);
     }
     public Customer displayCustomerCreation(){
         Scanner scanner = DataInput.getDataInput().getScanner();
@@ -106,7 +102,7 @@ public class ConsoleView{
         String customerType = scanner.nextLine();
         Customer newCustomer = customerFactory.createCustomer(customerType);
 
-        if (newCustomer == null) throw new AssertionError("This customer object is null");//prevent crashing from null exception error
+        if (newCustomer instanceof Customer)
         newCustomer.setCustomerID(ID);
         newCustomer.setFullName(fullName);
         return newCustomer;
@@ -132,12 +128,12 @@ public class ConsoleView{
         String cardHolderID;
         IDChecks IDChecks = new IDChecks();
         do{ cardHolderID = scanner.nextLine();
-            if(IDChecks.claimIDCheck(cardHolderID) != null){
+            if(IDChecks.claimIDCheck(cardHolderID) ==""){
                 break;
             }else{
                 System.out.println("Input does not follow format of f-10 numbers");
             }
-        }while ((IDChecks.customerIDCheck(cardHolderID) == null));
+        }while ((IDChecks.customerIDCheck(cardHolderID) == ""));
 
         InsuranceCard newCard = new InsuranceCard();
         newCard.setCardID(cardID);
