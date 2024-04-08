@@ -2,7 +2,7 @@ package assessment1;
 
 import java.util.*;
 
-public class CustomerCollection implements Iterator {
+public class CustomerCollection implements Collection {
     private List<Customer> customerList = new ArrayList<>();
     private  int currentItem;
 
@@ -15,7 +15,8 @@ public class CustomerCollection implements Iterator {
     public List<Customer> getCustomerList() {
         return customerList;
     }
-    public void addCustomer(Customer customer){
+
+    public void add(Customer customer){
         customerList.add(customer);
     }
     @Override

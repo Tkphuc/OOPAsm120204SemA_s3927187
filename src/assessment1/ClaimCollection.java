@@ -2,7 +2,7 @@ package assessment1;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-public class ClaimCollection implements Iterator {
+public class ClaimCollection implements Collection {
     private List<Claim> claimList = new ArrayList<>();
     private int currentItem;
 
@@ -12,10 +12,10 @@ public class ClaimCollection implements Iterator {
         this.currentItem =0;
     }
 
-    public List<Claim> getClaimList() {
+    public List<Claim> getList() {
         return claimList;
     }
-    public void addClaim(Claim claim){
+    public void add(Claim claim){
         claimList.add(claim);
     }
     @Override

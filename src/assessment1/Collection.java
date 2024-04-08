@@ -1,6 +1,6 @@
 package assessment1;
 
-public interface Iterator {
+public interface Collection {
 
     boolean hasNext();
     Object next();

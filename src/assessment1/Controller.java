@@ -114,12 +114,12 @@ public class Controller {
                                 earlyBreak = true;
                                 break;
                             }else {
-                                claimCollection.addClaim(newClaim);}
+                                claimCollection.add(newClaim);}
                         }
                         if (!(earlyBreak)) {
                             try {
                                 claimCollection.sortCollection();
-                                writeClaimFile(claimCollection.getClaimList());
+                                writeClaimFile(claimCollection.getList());
                             } catch (Exception e) {
                                 System.err.println("Cannot write to "+CLAIM_FILE);
                             }
@@ -198,16 +198,16 @@ public class Controller {
                                     newInfo = consoleView.bankingInfoCreation();
                                     originalClaim.setReceiverBankingInfo(newInfo);
                                }
-                               claimCollection.getClaimList().remove(originalClaim);
+                               claimCollection.getList().remove(originalClaim);
                                toUpdate = originalClaim;
-                               claimCollection.addClaim(toUpdate);
+                               claimCollection.add(toUpdate);
                                while(customerCollection.hasNext()){
                                    if(customerCollection.next().getClaimsList().contains(originalClaim)){
                                        customerCollection.next().getClaimsList().remove(originalClaim);
                                        customerCollection.next().getClaimsList().add(toUpdate);
                                    }
                                }
-                               writeClaimFile(claimCollection.getClaimList());
+                               writeClaimFile(claimCollection.getList());
                                writeCustomerFile(customerCollection.getCustomerList());
                         }
                         //update a claim;
@@ -276,13 +276,13 @@ public class Controller {
                             if(!(earlyBreak)){
                                 InsuranceCard insuranceCard1 = consoleView.displayInsuranceCardCreation();
                                 newCustomer.setInsuranceCard(insuranceCard1);
-                                customerCollection.addCustomer(newCustomer);
-                                cardCollection.addCard(insuranceCard1);}
+                                customerCollection.add(newCustomer);
+                                cardCollection.add(insuranceCard1);}
                                 try {
                                     customerCollection.sortCollection();
                                     cardCollection.sortCollection();
                                     writeCustomerFile(customerCollection.getCustomerList());
-                                    writeInsuranceCardToFile(cardCollection.getInsuranceCardList());
+                                    writeInsuranceCardToFile(cardCollection.getList());
                                 } catch (Exception e) {
                                     System.err.println("Error write to file");
                                     //throw new RuntimeException(e);
@@ -307,11 +307,11 @@ public class Controller {
                                     answer = scanner.nextLine();
                                     if (answer.equalsIgnoreCase("Y")) {
                                         consoleView.deleteACustomer();
-                                        claimCollection.getClaimList().remove(toDelete.getClaimsList());
-                                        cardCollection.getInsuranceCardList().remove(toDelete.getInsuranceCard());
+                                        claimCollection.getList().remove(toDelete.getClaimsList());
+                                        cardCollection.getList().remove(toDelete.getInsuranceCard());
                                         customerCollection.getCustomerList().remove(toDelete);
-                                        writeClaimFile(claimCollection.getClaimList());
-                                        writeInsuranceCardToFile(cardCollection.getInsuranceCardList());
+                                        writeClaimFile(claimCollection.getList());
+                                        writeInsuranceCardToFile(cardCollection.getList());
                                         writeCustomerFile(customerCollection.getCustomerList());
                                     } else if (answer.equalsIgnoreCase("N")) {
                                         System.out.println("Confirm no delete");
