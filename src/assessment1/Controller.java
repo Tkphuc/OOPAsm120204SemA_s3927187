@@ -4,7 +4,6 @@ package assessment1;
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;
-
 public class Controller {
     private Claim claim;
     private Customer customer;
@@ -19,30 +18,23 @@ public class Controller {
     }
     public Claim createClaim(){
          Claim newClaim;
-         newClaim = consoleView.displayClaimCreationForm();
+         newClaim = consoleView.displayClaimCreation();
          return newClaim;
     }
     public Customer createCustomer(){
         Customer newCustomer;
         InsuranceCard insuranceCard1 = createInsuranceCard();
-        newCustomer = consoleView.displayCustomerCreationForm();
+        newCustomer = consoleView.displayCustomerCreation();
         newCustomer.setInsuranceCard(insuranceCard);
         insuranceCard1.setCardHolder(newCustomer);
         return newCustomer;
     }
-    public void updateAClaimOfCustomer(Customer customer){
-        Claim claimToUpdate = new Claim();
-        customer.update(claimToUpdate);
-    }
-    public void getAllClaimOfCustomer(Customer customer){
-        customer.getAll();
-    }
-    public void deleteAClaimOfCustomer(Customer customer){
-        customer.delete();
+    public void deleteACustomer(Customer customer) throws Exception{
+        readClaimFile("customer.txt");
     }
     public InsuranceCard createInsuranceCard(){
         InsuranceCard newInsuranceCard;
-        newInsuranceCard = consoleView.insuranceCardCreationForm();
+        newInsuranceCard = consoleView.displayInsuranceCardCreation();
         return newInsuranceCard;
     }
     public File createNewFile(){
@@ -95,6 +87,7 @@ public class Controller {
     public void eventLoop(){
         String answer;
         Scanner scanner = DataInput.getDataInput().getScanner();
+        IDChecks IDCheck = new IDChecks();
         do {
             consoleView.displayMainMenu();
             answer = scanner.nextLine();
@@ -110,19 +103,11 @@ public class Controller {
                 do{
                 switch (answer){
                     case "3":
-                        //System.out.println("Enter file name: ");
-                        //answer = scanner.nextLine();
-
-                        IDChecks IDChecks = new IDChecks();
-                        do{ System.out.println("Enter claim ID: ");
+                        do{
+                            System.out.println("Enter claim ID: ");
                             answer = scanner.nextLine();
-                            if(IDChecks.claimIDCheck(answer) != null){
-                                break;
-                            }else{
-                                System.out.println("Input does not follow format of f-10 numbers");
-                            }
-                        }while ((IDChecks.customerIDCheck(answer) == null));
-                        Claim claimToRead = new Claim();
+                        } while (!(claimCollection.next().getClaimID().equals(answer)));
+                        Claim claimToRead = null;
                         while (claimCollection.hasNext()){
                             if(claimCollection.next().getClaimID().equals(answer)){
                                 claimToRead = claimCollection.next();
@@ -135,7 +120,7 @@ public class Controller {
                     case "2":
                         boolean earlyBreak = false;
                         Claim newClaim;
-                        newClaim = consoleView.displayClaimCreationForm();
+                        newClaim = consoleView.displayClaimCreation();
                         while(claimCollection.hasNext()){
                             if(newClaim.equals(claimCollection.next())){
                                 System.out.println("Claim already exist.");
@@ -159,18 +144,64 @@ public class Controller {
                         }
                         break;
                     case "4":
-                        answer = scanner.nextLine();
+                        Claim toUpdate = null;
+                        do{
+                            System.out.println("Enter claim ID: ");
+                            answer = scanner.nextLine();
+                        } while (!(claimCollection.next().getClaimID().equals(answer)));
+                        while (claimCollection.hasNext()){
+                            if(claimCollection.next().getClaimID().equals(answer)){
+                                toUpdate = claimCollection.next();
+                            }
+                        }
+                        if(toUpdate != null) {
+                               consoleView.displayOneClaim(toUpdate);
+                               consoleView.updateClaimMenu();
+                               answer = scanner.nextLine();
+                               if(answer.equalsIgnoreCase("1")){
+                                    consoleView.upadteDocumentsMenu();
+                                    answer = scanner.nextLine();
+                                    if(answer.equalsIgnoreCase("1")){
+                                        System.out.println("Enter new document: ");
+                                        answer = scanner.nextLine();
+                                        if(!(toUpdate.getDocuments().contains(answer))){
+                                            toUpdate.addDocument(answer);
+                                        }else{
+                                            System.out.println("documents exist or input error");
+                                        }
+                                    } else if (answer.equalsIgnoreCase("2")) {
+                                        System.out.println("Enter document to remove: ");
+                                        answer = scanner.nextLine();
+                                        if(toUpdate.getDocuments().contains(answer)){
+                                            toUpdate.removeDocument(answer);
+                                        }else{
+                                            System.out.println("Document not exists");
+                                        }
+                                    }else{System.out.println("Wromg input");}
+                               } else if (answer.equalsIgnoreCase("2")) {
+                                   System.out.println("Claim current amount: "+toUpdate.getClaimAmount());
+                                   System.out.println("Enter new amount: ");
+                                   double newAmount = scanner.nextDouble();
+                                   if(toUpdate.getClaimAmount() != newAmount){
+                                   toUpdate.setClaimAmount(newAmount);}
+                               } else if (answer.equalsIgnoreCase("3")) {
+                                   consoleView.updateStatusMenu();
+                                   answer = scanner.nextLine();
+                                   if(answer.equalsIgnoreCase("1")){
+                                       toUpdate.setStatus(Status.PROCESSING);
+                                   } else if (answer.equalsIgnoreCase("2")) {
+                                       toUpdate.setStatus(Status.DONE);
+                                   }else{System.out.println("wrong input");}
+                               } else if (answer.equalsIgnoreCase("4")) {
+                                    ReceiverBankingInfo newInfo;
+                                    System.out.println("Create new banking info to replace the old: ");
+                                    newInfo = consoleView.bankingInfoCreation();
+                                    toUpdate.setReceiverBankingInfo(newInfo);
+                               }
+                        }
+                        //update a claim;
+                        break;
 
-                        //input claim ID
-                        //Return name and ID of claim owner
-                        //consoleView.searchClaimOwner;
-                        break;
-                    case "5":
-                        //input claim ID.
-                        //Re-enter info as needed
-                        //set new info to claim or create new claim to replace the old one
-                        //consoleView.updateClaim();
-                        break;
                     case "exit":
                         //exit the switch cases
                         break;
@@ -197,17 +228,11 @@ public class Controller {
                             //Show all customers
                             break;
                         case "2":
-                            IDChecks IDCheck = new IDChecks();
+                            Customer customerToRead = null;
                             do{
                                 System.out.println("Enter customer ID: ");
                                 answer = scanner.nextLine();
-                                if(IDCheck.customerIDCheck(answer) != null){
-                                    break;
-                                }else{
-                                    System.out.println("Input does not follow format of f-10 number");
-                                }
-                            } while ((IDCheck.customerIDCheck(answer) == null));
-                            Customer customerToRead = null;
+                            } while (!(customerCollection.next().getCustomerID().equals(answer)));
                             while(customerCollection.hasNext()){
                                 if(customerCollection.next().getCustomerID().equals(answer)){
                                     customerToRead = customerCollection.next();
@@ -219,10 +244,12 @@ public class Controller {
                             break;
                         case "3":
                             boolean earlyBreak = false;
-                            Customer newCustomer = consoleView.displayCustomerCreationForm();
+                            Customer newCustomer = consoleView.displayCustomerCreation();
                             while(customerCollection.hasNext()){
                                 if(newCustomer.equals(customerCollection.next())){
-                                    System.out.println("Claim already exist.");
+                                    System.out.println("Customer already exist.");
+                                     InsuranceCard insuranceCard1 = consoleView.displayInsuranceCardCreation();
+                                     newCustomer.setInsuranceCard(insuranceCard1);
                                     earlyBreak = true;
                                     break;
                                 }else {customerCollection.addCustomer(newCustomer);}
@@ -236,13 +263,65 @@ public class Controller {
                             }
                             break;
                         case "4":
-                            //consoleView.updateACustomer();
+                            Customer toDelete = null;
+                            do{
+                                System.out.println("Enter customer ID: ");
+                                answer = scanner.nextLine();
+                                while (customerCollection.hasNext()){
+                                    if(customerCollection.next().getCustomerID().equals(answer)){
+                                        toDelete = customerCollection.next();
+                                        //Delete claim from file claim.txt
+                                    }else{
+                                        System.out.println("Input error");
+                                    }
+                            }while (!(customerCollection.next().getCustomerID().equals(answer)));
+
+
+                            }
+                            if(toDelete != null) {
+                                do {
+                                    answer = scanner.nextLine();
+                                    if (answer.equalsIgnoreCase("Y")) {
+                                        consoleView.deleteACustomer();
+                                    } else if (answer.equalsIgnoreCase("N")) {
+                                        System.out.println("Confirm no delete");
+                                    } else {
+                                        System.out.println("Wrong input: Y/N please.");
+                                    }
+                                }while (answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("N"));
+                            }
                             break;
-                        case "5":
-                            //consoleView.deleteACustomer();
+                        case "6":
+                            ClaimCollection claimsOfCustomer = new ClaimCollection(customer.getAll());
+                            System.out.println("Enter id of a customer's claim: ");
+                            answer = scanner.nextLine();
+                            while (claimsOfCustomer.hasNext()){
+                                if(claimsOfCustomer.next().getClaimID().equals(answer)){
+                                    consoleView.displayOneClaim(claimsOfCustomer.next());
+                                }else{
+                                    System.out.println("Claim does not exist");
+                                }
+                            }
+                        case "7":
+                            claimsOfCustomer = new ClaimCollection(customer.getAll());
+                            while (claimsOfCustomer.hasNext()){
+                                consoleView.displayOneClaim(claimsOfCustomer.next());
+                            }
+                            break;
+                        case "8":
+                            claimsOfCustomer = new ClaimCollection(customer.getAll());
+                            System.out.println("Enter id of a customer's claim: ");
+                            answer = scanner.nextLine();
+                            while (claimsOfCustomer.hasNext()){
+                                if(claimsOfCustomer.next().getClaimID().equals(answer)){
+                                    customer.delete(claimsOfCustomer.next());
+                                }else{
+                                    System.out.println("Claim does not exist");
+                                }
+                            }
                             break;
                         case "exit":
-                            //exit the switch cases
+                            System.out.println("Exit customer manager.");
                             break;
                         default:
                             System.out.println("Invalid input");
@@ -258,7 +337,6 @@ public class Controller {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                IDChecks IDCheck = new IDChecks();
                 do{
                     switch (answer){
                         case "1":

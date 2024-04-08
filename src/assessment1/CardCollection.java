@@ -18,6 +18,9 @@ public class CardCollection implements Iterator {
     public List<InsuranceCard> getInsuranceCardList() {
         return insuranceCardList;
     }
+    public void addCard(InsuranceCard card){
+        insuranceCardList.add(card);
+    }
 
     @Override
     public boolean hasNext() {

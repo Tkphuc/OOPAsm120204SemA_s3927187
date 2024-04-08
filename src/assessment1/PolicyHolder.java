@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PolicyHolder extends Customer{
-    private List<Dependent> dependents;
+    private List<Customer> dependents;
+
     public PolicyHolder (){super();
     this.dependents = new ArrayList<>();}
-    public PolicyHolder(String customerID, String fullName, InsuranceCard insuranceCard, List<Dependent> dependents){
+    public PolicyHolder(String customerID, String fullName, InsuranceCard insuranceCard, List<Customer> dependents){
         super(customerID, fullName, insuranceCard);
         this.dependents = dependents;
     }
     public boolean AddDependent(Customer Dependent){
         if(!hasDependent(Dependent)){
-            dependents.add((assessment1.Dependent) Dependent);
+            dependents.add((assessment1.Customer) Dependent);
             return  true;
         }else{
             return  false;
@@ -21,7 +22,7 @@ public class PolicyHolder extends Customer{
     }
     public  boolean RemoveDependent(Customer Dependent){
         if(hasDependent(Dependent)){
-            dependents.remove((assessment1.Dependent)Dependent);
+            dependents.remove((assessment1.Customer)Dependent);
             return  true;
         }else{
             return  false;
@@ -32,7 +33,10 @@ public class PolicyHolder extends Customer{
             return  Dependent;
         }else {return  null;}
     }
+    public List<Customer> getAllDependent(){
+       return dependents;
+    }
     public boolean hasDependent(Customer Dependent){
-        return Dependent instanceof Dependent && dependents.contains(Dependent);
+        return Dependent instanceof Customer && dependents.contains(Dependent);
     }
 }

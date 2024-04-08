@@ -92,7 +92,12 @@ public class Claim implements Serializable {
     public void setDocuments(List<String> documents) {
         Documents = documents;
     }
-
+    public void addDocument(String document){
+        this.Documents.add(document);
+    }
+    public void removeDocument(String document){
+        this.Documents.remove(document);
+    }
     public ReceiverBankingInfo getReceiverBankingInfo() {
         return receiverBankingInfo;
     }

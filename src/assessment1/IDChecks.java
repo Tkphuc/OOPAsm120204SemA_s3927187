@@ -8,6 +8,7 @@ public class IDChecks {
     private final Pattern CLAIM_ID_PATTERN = Pattern.compile("[f]*\\d{10}");
     private final Pattern CUSTOMER_ID_PATTERN = Pattern.compile("[c]*\\d{7}");
     private final Pattern CARD_ID_PATTERN = Pattern.compile("\\d{10}");
+    private final Pattern DOCUMENT_NAME_PATTERN = Pattern.compile("[f]*\\d{10}+_+\\d{10}+_+[a-zA-Z0-9]");
     public IDChecks() {
     }
     public String claimIDCheck(String inputString){
@@ -27,6 +28,13 @@ public class IDChecks {
     }
     public String cardIDCheck(String inputString){
         if(CARD_ID_PATTERN.matcher(inputString).matches()){
+            return inputString;
+        }else{
+            return null;
+        }
+    }
+    public String documentIDCheck(String inputString){
+        if(DOCUMENT_NAME_PATTERN.matcher(inputString).matches()){
             return inputString;
         }else{
             return null;

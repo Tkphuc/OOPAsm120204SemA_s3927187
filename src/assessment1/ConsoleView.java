@@ -24,7 +24,7 @@ public class ConsoleView{
     public void displayClaimStatus(Claim claim){
         System.out.println("Current Status" + claim.getStatus());
     }
-    public Claim displayClaimCreationForm(){
+    public Claim displayClaimCreation(){
         //Map<String,DynamicAttributeType> claimForm = new HashMap<>();
         ClaimBuilder claimBuilder = new ClaimBuilder();
         Claim newClaim;
@@ -74,10 +74,15 @@ public class ConsoleView{
         claimBuilder.setClaimAmount(scanner.nextDouble());
 
         //double claimAmount =
-        System.out.println("Enter claim status: ");
+        System.out.println("Claim status: new ");
         claimBuilder.setStatus(Status.NEW);
-        //claimForm.put(STATUS,new StatusTypeAttribute(Status.NEW));
+        ReceiverBankingInfo receiverBankingInfo = bankingInfoCreation();
 
+        claimBuilder.setBankingInfo(receiverBankingInfo.getBank(),receiverBankingInfo.getName(),receiverBankingInfo.getNumber());
+        return newClaim = claimBuilder.build();
+    }
+    public ReceiverBankingInfo bankingInfoCreation(){
+        Scanner scanner =DataInput.getDataInput().getScanner();
         System.out.println("Enter receiver Banking info ");
         System.out.println("Enter bank name: ");
         String bankName = scanner.nextLine();
@@ -85,13 +90,10 @@ public class ConsoleView{
         String name = scanner.nextLine();
         System.out.println("Enter number: ");
         String number = scanner.nextLine();
-        //new ReceiverBankingInfo(bankName,name,number);
-
-        claimBuilder.setBankingInfo(bankName,name,number);
-        return newClaim = claimBuilder.build();
+        ReceiverBankingInfo bankingInfo = new ReceiverBankingInfo(bankName,name,number);
+        return bankingInfo;
     }
-
-    public Customer displayCustomerCreationForm(){
+    public Customer displayCustomerCreation(){
         Scanner scanner = DataInput.getDataInput().getScanner();
         System.out.println("Customer creation form");
         System.out.println();
@@ -111,7 +113,7 @@ public class ConsoleView{
         return newCustomer;
     }
 
-    public InsuranceCard insuranceCardCreationForm(){
+    public InsuranceCard displayInsuranceCardCreation(){
         Scanner scanner = DataInput.getDataInput().getScanner();
 
         System.out.println("New insurance card form ");
@@ -150,15 +152,23 @@ public class ConsoleView{
         System.out.println("Customer card : "+customer.getInsuranceCard().getCardID());
         if(customer instanceof PolicyHolder){
         System.out.println("Customer type: Policy holder");
-        System.out.println("Customer dependents");
-
+        System.out.println("Customer dependents: ");
+        CustomerCollection allDependents = new CustomerCollection( ((PolicyHolder)customer).getAllDependent());
+        while (allDependents.hasNext()){
+            System.out.println("Dependent's name: "+allDependents.next().getFullName());
+            System.out.println("Dependent's ID: "+allDependents.next().getCustomerID());
+        }
         }else if(customer instanceof Dependent){
             System.out.println("Customer type: dependent");
             System.out.println("Depend on ");
             System.out.println("ID: "+((Dependent) customer).getDependOn().getCustomerID());
             System.out.println("Full name: "+((Dependent) customer).getDependOn().getFullName());
         }
-        customer.getAll();
+        System.out.println("Customer's claim: ");
+        ClaimCollection claimCollection = new ClaimCollection(customer.getAll());
+        while (claimCollection.hasNext()){
+            System.out.println(claimCollection.next().getClaimID());
+        }
     }
     public  void displayInsuranceCard(InsuranceCard insuranceCard){
         System.out.println("Card ID"+insuranceCard.getCardID());
@@ -167,14 +177,33 @@ public class ConsoleView{
         System.out.println("Policy Owner:  "+insuranceCard.getPolicyOwner());
         System.out.println("Card expiration date: "+insuranceCard.getExpirationDate());
     }
-    public void updateClaim(){}
-    public void
+    public void updateClaimMenu(){
+        System.out.println("Updatable info: ");
+        System.out.println("1. Documents");
+        System.out.println("2. Claim amount");
+        System.out.println("3. Claim status");
+        System.out.println("4. Receiver banking info");
+        System.out.println("Enter an number 1 -4: ");
+    }
+    public void upadteDocumentsMenu(){
+        System.out.println("1. add document");
+        System.out.println("2. remove document");
+    }
+    public void updateStatusMenu(){
+        System.out.println("Update status");
+        System.out.println("1. Processing");
+        System.out.println("2. Done");
+        System.out.println("Enter a number 1 - 2");
+    }
+    public void deleteACustomer(){
+        System.out.println("Delete this customer ? Y/N");
+    }
 
     public void displayMainMenu() {
         System.out.println("Enter 1,2, or 3 to choose a function: ");
         System.out.println("1. Manage claim");
-        System.out.println("2. Manage " +
-                "customer");
+        System.out.println("2. Manage customer");
+        System.out.println("3. Manage insurance cards");
         System.out.println("Type 'exit' to leave the program ");
     }
     public String createNewFileMenu(){
@@ -190,8 +219,7 @@ public class ConsoleView{
         System.out.println("1: Show all existing claims");
         System.out.println("2: File new claim");
         System.out.println("3: View a specific claim");
-        System.out.println("4 View whose does a claim belongs");
-        System.out.println("5. Update a claim");
+        System.out.println("4. Update a claim");
         System.out.println("Type 'exit' to leave the program ");
     }
     public void manageCustomerMenu(){
@@ -201,7 +229,6 @@ public class ConsoleView{
         System.out.println("2. shows a specific customer info");
         System.out.println("3. Register new customer");
         System.out.println("4. Delete a customer");
-        System.out.println("5. Update a customer claim ");
         System.out.println("6. get a claim of customer");
         System.out.println("7. get  all claim of a customer");
         System.out.println("8. delete a claim of a customer");

@@ -93,12 +93,9 @@ public abstract class Customer implements ClaimProcessManager, Serializable {
     }
 
     @Override
-    public Claim getAll() {
-        ClaimCollection localClaimCollection = new ClaimCollection(this.getClaimsList());
-        if(localClaimCollection.hasNext()){
-            return localClaimCollection.next();
-        }
-        return null;
+    public List<Claim> getAll() {
+        //ClaimCollection localClaimCollection = new ClaimCollection(this.getClaimsList());
+        return claimsList;
     }
 
     @Override
