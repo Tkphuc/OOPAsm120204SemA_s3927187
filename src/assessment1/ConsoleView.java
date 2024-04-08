@@ -25,7 +25,6 @@ public class ConsoleView{
         System.out.println("Current Status" + claim.getStatus());
     }
     public Claim displayClaimCreation(){
-        //Map<String,DynamicAttributeType> claimForm = new HashMap<>();
         ClaimBuilder claimBuilder = new ClaimBuilder();
         Claim newClaim;
         Scanner scanner = DataInput.getDataInput().getScanner();
@@ -206,12 +205,10 @@ public class ConsoleView{
         System.out.println("3. Manage insurance cards");
         System.out.println("Type 'exit' to leave the program ");
     }
-    public String createNewFileMenu(){
+
+    public void createNewFileMenu(){
         Scanner scanner = DataInput.getDataInput().getScanner();
-        System.out.println("Create a new file: ");
-        System.out.println("Enter file name: ");
-        String fileName = scanner.nextLine();
-        return fileName;
+        System.out.println("Create a new file ");
     }
     public void manageClaimMenu(){
         System.out.println("Manage claim menu");
