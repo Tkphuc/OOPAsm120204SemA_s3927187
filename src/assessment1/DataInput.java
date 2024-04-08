@@ -1,7 +1,9 @@
 package assessment1;
 
 import java.util.Scanner;
-
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ */
 public class DataInput {
     private static DataInput input;
     private Scanner scanner;

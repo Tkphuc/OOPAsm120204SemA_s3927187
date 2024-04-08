@@ -1,22 +1,25 @@
 package assessment1;
-//https://www.geeksforgeeks.org/date-settime-method-in-java-with-examples/
-//https://www.baeldung.com/java-string-valid-date
-//https://viettuts.vn/java/su-dung-regex-trong-java
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.*;
-
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ *
+ */
+/*
+Date class guide https://www.geeksforgeeks.org/date-settime-method-in-java-with-examples/
+DateFormat idea //https://www.baeldung.com/java-string-valid-date
+Regex idea     //https://viettuts.vn/java/su-dung-regex-trong-java*/
 
 
 public class DateWrapper{
     private Date date;
     private static final String DATE_FORMAT = "dd/MM/yyyy";
-    //private Pattern pattern = Pattern.compile("\\d{2}+\\/+\\d{2}+\\/+\\d{4}");
     private  DateFormat format = new SimpleDateFormat(DATE_FORMAT);
     private Matcher matcher;
-    //regex: \d{2}+\/+\d{2}+\/+\d{4}
     public DateWrapper(Date date){
         this.date = date;
     }

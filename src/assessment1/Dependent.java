@@ -1,7 +1,8 @@
 package assessment1;
-
-
-
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ *
+ */
 public class Dependent extends Customer{
     //should we have a policyHolder attribute for the one that this customer depend on
     private Customer DependOn;

@@ -1,6 +1,8 @@
 package assessment1;
-//https://www.w3schools.com/java/java_files_read.asp
-//https://stackoverflow.com/questions/4388054/java-how-to-fix-the-unchecked-cast-warning
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ */
+
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;

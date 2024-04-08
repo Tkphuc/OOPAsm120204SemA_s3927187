@@ -1,5 +1,8 @@
 package assessment1;
-
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ *
+ */
 public class ReceiverBankingInfo {
     private String bank;
     private  String name;

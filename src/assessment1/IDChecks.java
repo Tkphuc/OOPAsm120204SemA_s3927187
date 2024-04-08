@@ -1,6 +1,10 @@
 package assessment1;
-
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ *
+ */
 import java.util.regex.Pattern;
+// Regex idea: https://viettuts.vn/java/su-dung-regex-trong-java
 
 public class IDChecks {
     //private String inputString;

@@ -1,7 +1,7 @@
 package assessment1;
-// https://www.baeldung.com/java-hashmap-different-value-types
-//https://stackoverflow.com/questions/24863185/what-is-an-assertionerror-in-which-case-should-i-throw-it-from-my-own-code
-//https://www.w3schools.com/java/java_files_create.asp
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ */
 import java.util.Date;
 import java.util.Scanner;
 

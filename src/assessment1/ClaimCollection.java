@@ -1,4 +1,7 @@
 package assessment1;
+/**
+ * @author <Tran Kiem Phuc - s3927187>
+ */
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
