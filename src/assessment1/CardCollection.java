@@ -1,10 +1,11 @@
 package assessment1;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class CardCollection implements Iterator {
-    private List<InsuranceCard> insuranceCardList;
+    private List<InsuranceCard> insuranceCardList = new ArrayList<>();
     private  int currentItem;
 
     public CardCollection() {

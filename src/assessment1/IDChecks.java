@@ -33,7 +33,7 @@ public class IDChecks {
             return null;
         }
     }
-    public String documentIDCheck(String inputString){
+    public String documentNameCheck(String inputString){
         if(DOCUMENT_NAME_PATTERN.matcher(inputString).matches()){
             return inputString;
         }else{

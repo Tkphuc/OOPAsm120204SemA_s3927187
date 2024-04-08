@@ -1,8 +1,9 @@
 package assessment1;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 public class ClaimCollection implements Iterator {
-    private List<Claim> claimList;
+    private List<Claim> claimList = new ArrayList<>();
     private int currentItem;
 
     public ClaimCollection(){}

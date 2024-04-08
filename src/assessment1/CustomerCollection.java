@@ -1,10 +1,9 @@
 package assessment1;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class CustomerCollection implements Iterator {
-    private List<Customer> customerList;
+    private List<Customer> customerList = new ArrayList<>();
     private  int currentItem;
 
     public CustomerCollection() {}
@@ -21,11 +20,14 @@ public class CustomerCollection implements Iterator {
     }
     @Override
     public boolean hasNext() {
+        if(customerList != null){
         if(currentItem >= customerList.size()){
             currentItem = 0;
             return false;
         }
-        return true;
+        return true;} return false;
+
+
     }
 
     @Override

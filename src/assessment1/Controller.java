@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class Controller {
 
     private ConsoleView consoleView;
-    public final String CUSTOMER_FILE = "./customers.txt";
-    public final String CARD_FILE = "./cards.txt";
-    public final String CLAIM_FILE = "./claims.txt";
+    public final String CUSTOMER_FILE = "customers.txt";
+    public final String CARD_FILE = "cards.txt";
+    public final String CLAIM_FILE = "claims.txt";
 
     public Controller(ConsoleView consoleView) {
 
@@ -26,45 +26,49 @@ public class Controller {
             newFile = new File(CARD_FILE);
         }
         try {
-        if (newFile.createNewFile()) {
-            System.out.println(newFile.getName()+"is created");
-        }else{
-            System.out.println("File already exists");
-        }
-    }catch (IOException e){
+            if (newFile != null && newFile.createNewFile()) {
+                System.out.println(newFile.getName() + "is created");
+            }
+        }catch (IOException e){
         System.out.println("Error creating file");
             }
         return newFile;
     }
     public List<Customer> readCustomerFile() throws Exception{
+        @SuppressWarnings("unchecked")
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(CUSTOMER_FILE));
         List<Customer> customers = ((List<Customer>)in.readObject());
         in.close();
         return customers;
     }
     public List<Claim> readClaimFile() throws Exception{
+        @SuppressWarnings("unchecked")
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(CLAIM_FILE));
         List<Claim> claims = ((List<Claim>)in.readObject());
         in.close();
         return claims;
     }
     public List<InsuranceCard> readInsuranceCardFile() throws Exception{
+        @SuppressWarnings("unchecked")
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(CARD_FILE));
         List<InsuranceCard> cards = ((List<InsuranceCard>)in.readObject());
         in.close();
         return cards;
     }
     public void writeCustomerFile(List<Customer> customers)throws Exception{
+        @SuppressWarnings("unchecked")
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(CUSTOMER_FILE,false));
         out.writeObject(customers);
         out.close();
     }
     public void writeClaimFile(List<Claim> claims)throws Exception{
+        @SuppressWarnings("unchecked")
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(CLAIM_FILE,false));
         out.writeObject(claims);
         out.close();
     }
     public void writeInsuranceCardToFile(List<InsuranceCard> cards)throws Exception{
+        @SuppressWarnings("unchecked")
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(CARD_FILE,false));
         out.writeObject(cards);
         out.close();
@@ -83,14 +87,14 @@ public class Controller {
                 CustomerCollection customerCollection = new CustomerCollection();
                 CardCollection cardCollection = new CardCollection();
                 try {
-                    claimCollection = new ClaimCollection( readClaimFile());
+                    claimCollection = new ClaimCollection(readClaimFile());
                     customerCollection = new CustomerCollection(readCustomerFile());
                     cardCollection = new CardCollection(readInsuranceCardFile());
                 } catch (Exception e) {
                     createNewFile(CUSTOMER_FILE);
                     createNewFile(CARD_FILE);
                     createNewFile(CLAIM_FILE);
-                    throw new RuntimeException(e);
+                    System.err.println("New file created");
                 }
                 do{
                 switch (answer){
@@ -117,7 +121,7 @@ public class Controller {
                                 claimCollection.sortCollection();
                                 writeClaimFile(claimCollection.getClaimList());
                             } catch (Exception e) {
-                                throw new RuntimeException(e);
+                                System.err.println("Cannot write to "+CLAIM_FILE);
                             }
                         }
                         break;
@@ -127,13 +131,13 @@ public class Controller {
                             answer = scanner.nextLine();
                             claimCollection.next();
                         } while (claimCollection.hasNext() &&!(claimCollection.next().getClaimID().equals(answer)));
-                        Claim claimToRead = null;
+                        Claim claimToRead = new Claim();
                         while (claimCollection.hasNext()){
                             if(claimCollection.next().getClaimID().equals(answer)){
                                 claimToRead = claimCollection.next();
                             }
                         }
-                        if(claimToRead != null){
+                        if(! (claimToRead instanceof Claim) ){
                             consoleView.displayOneClaim(claimToRead);}
                         else{System.out.println("Claim does not exist");}
                         break;
@@ -232,7 +236,7 @@ public class Controller {
                     createNewFile(CUSTOMER_FILE);
                     createNewFile(CARD_FILE);
                     createNewFile(CLAIM_FILE);
-                    throw new RuntimeException(e);
+                    System.err.println("No existing file,create new file");
                 }
                 do{
                     switch (answer){
@@ -262,27 +266,28 @@ public class Controller {
                         case "3":
                             boolean earlyBreak = false;
                             Customer newCustomer = consoleView.displayCustomerCreation();
-                            while(customerCollection.hasNext()){
+                            while(customerCollection.hasNext() && customerCollection !=null){
                                 if(newCustomer.equals(customerCollection.next())){
                                     System.out.println("Customer already exist.");
-
                                     earlyBreak = true;
                                     break;
-                                }else {InsuranceCard insuranceCard1 = consoleView.displayInsuranceCardCreation();
-                                    newCustomer.setInsuranceCard(insuranceCard1);
-                                    customerCollection.addCustomer(newCustomer);
-                                    cardCollection.addCard(insuranceCard1);}
+                                }else if(customerCollection == null){System.out.println("Customer list is empty");}
                             }
                             if(!(earlyBreak)){
+                                InsuranceCard insuranceCard1 = consoleView.displayInsuranceCardCreation();
+                                newCustomer.setInsuranceCard(insuranceCard1);
+                                customerCollection.addCustomer(newCustomer);
+                                cardCollection.addCard(insuranceCard1);}
                                 try {
                                     customerCollection.sortCollection();
                                     cardCollection.sortCollection();
                                     writeCustomerFile(customerCollection.getCustomerList());
                                     writeInsuranceCardToFile(cardCollection.getInsuranceCardList());
                                 } catch (Exception e) {
-                                    throw new RuntimeException(e);
+                                    System.err.println("Error write to file");
+                                    //throw new RuntimeException(e);
                                 }
-                            }
+
                             break;
                         case "4":
                             Customer toDelete = null;
@@ -340,9 +345,9 @@ public class Controller {
                                 }
                             }
                             assert customerGetAllClaim != null;
-                            claimsOfCustomer = new ClaimCollection(customerGetAllClaim.getAll());
-                            while (claimsOfCustomer.hasNext()){
-                                consoleView.displayOneClaim(claimsOfCustomer.next());
+                            ClaimCollection claimsOfCustomer2 = new ClaimCollection(customerGetAllClaim.getAll());
+                            while (claimsOfCustomer2.hasNext()){
+                                consoleView.displayOneClaim(claimsOfCustomer2.next());
                             }
                             break;
                         case "8":
@@ -387,13 +392,13 @@ public class Controller {
                     cardCollection = new CardCollection(readInsuranceCardFile());
                 } catch (Exception e) {
                     createNewFile(CARD_FILE);
-                    throw new RuntimeException(e);
+
                 }
                 do{
                     switch (answer){
                         case "1":
                             do{
-                                System.out.println("Enter insurance card ID: ");
+                                System.out.println("Enter 3card ID: ");
                                 answer = scanner.nextLine();
                                 cardCollection.next();
                             }while (cardCollection.hasNext() && !(cardCollection.next().getCardID().equals(answer)));

@@ -1,9 +1,8 @@
 package assessment1;
 
-import java.util.Date;
-
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        /*
         Customer customer1 = customerFactory.createCustomer("Policy Holder");
         Customer customer2 = customerFactory.createCustomer("dependent");
         customer1.setFullName("ABC");
@@ -38,5 +37,9 @@ public class Main {
         System.out.println(b);
         System.out.println(((PolicyHolder) customer1).hasDependent(customer2));
         System.out.println(((PolicyHolder)customer1).getDepdendent(customer2));*/
+        ConsoleView consoleView = new ConsoleView();
+        Controller controller = new Controller(consoleView);
+        controller.eventLoop();
+
     }
 }
